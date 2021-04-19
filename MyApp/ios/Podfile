@@ -12,6 +12,8 @@ target 'MyApp' do
     :hermes_enabled => false
   )
 
+  pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
+
   target 'MyAppTests' do
     inherit! :complete
     # Pods for testing
