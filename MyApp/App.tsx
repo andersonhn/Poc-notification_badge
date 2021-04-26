@@ -8,28 +8,48 @@
  * @format
  */
 
- import React from 'react';
+ import React, { useState } from 'react';
+import { useEffect } from 'react';
  import {
    Button,
    StyleSheet,
    Text,
    View,
  } from 'react-native';
+import { requestNotifications } from 'react-native-permissions';
+import { NotificationContext } from './src/services/context';
 
- import { LocalNotification } from "./src/services/PushController"
+import { ConfigurePushNotification, LocalNotification } from "./src/services/PushController"
 
  const App = () => {
+
+  const [badgeNumber, setBadgeNumber] = useState<number>(0);
+
   const handleButtonPress = () => {
     LocalNotification()
   }
 
+  useEffect(() => {
+    requestNotifications(['alert', 'sound', 'badge']).then(({status, settings}) => {
+      console.info("Notification Permission: ", {status, settings})
+    });
+  }, [])
+
   return (
-    <View style={styles.container}>
-      <Text>Press a button to trigger the notification</Text>
-      <View style={{ marginTop: 20 }}>
-        <Button title={'Local Push Notification'} onPress={handleButtonPress} />
-      </View>
-    </View>
+    <NotificationContext.Provider value={{
+      badgeNumber,
+      setBadgeNumber
+    }}>
+      <ConfigurePushNotification>
+        <View style={styles.container}>
+          <Text>Press a button to trigger the notification</Text>
+          <Text>Badge: {badgeNumber}</Text>
+          <View style={{ marginTop: 20 }}>
+            <Button title={'Local Push Notification'} onPress={handleButtonPress} />
+          </View>
+        </View>
+      </ConfigurePushNotification>
+    </NotificationContext.Provider>
   )
  };
 
