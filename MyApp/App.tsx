@@ -40,15 +40,13 @@ import { ConfigurePushNotification, LocalNotification } from "./src/services/Pus
       badgeNumber,
       setBadgeNumber
     }}>
-      <ConfigurePushNotification>
-        <View style={styles.container}>
-          <Text>Press a button to trigger the notification</Text>
-          <Text>Badge: {badgeNumber}</Text>
-          <View style={{ marginTop: 20 }}>
-            <Button title={'Local Push Notification'} onPress={handleButtonPress} />
-          </View>
+      <View style={styles.container}>
+        <Text>Press a button to trigger the notification</Text>
+        <Text>Badge: {badgeNumber}</Text>
+        <View style={{ marginTop: 20 }}>
+          <Button title={'Local Push Notification'} onPress={handleButtonPress} />
         </View>
-      </ConfigurePushNotification>
+      </View>
     </NotificationContext.Provider>
   )
  };
